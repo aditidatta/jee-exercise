@@ -62,31 +62,89 @@ public class SinglyLinkedListInt {
 		int indexOfI = 1;
 		//int indexOfJ = 0;
 		Node i = head.next;
-		
-		Node temp = null;
+		Node prevI = head;
 		while(i != null){
 			Node j = head;
 			int indexOfJ = 0;
+			Node currentI = i;
+			Node nextI = i.next;
 			if(j.getElement() > i.getElement()){
-				j.next = i.next;
+				prevI.next = i.next;
 				i.next = j;
 				head = i;
-				travarse();
+				currentI = j;
 			}
 			else{
-				while(indexOfJ < indexOfI){
-					temp = j;
-					j = j.next;
-					indexOfJ++;
+				Node prevJ = j;
+				while(indexOfJ < indexOfI && j.next!=null){
+					Node currentJ = j;
+					Node nextJ = j.next;
+					
 					if(j.getElement() > i.getElement()){
-						j.next = i.next;
-						i .next = j;
-						temp.next = i;
+						prevI.next = i.next;
+						i.next = j;
+						prevJ.next = i;
+						currentI = j;
+						currentJ = i;
+						break;
+						//travarse();
 					}
+					prevJ = currentJ;
+					j = nextJ;
+					indexOfJ++;
 				}
 			}
+			prevI = currentI;
+			i = nextI;
 			indexOfI++;
 		}
+	}
+	
+	
+	public void insertBefore(int data, int index){
+		
+		if(index == 0){
+			this.addFirst(data);
+		}
+		else{
+			int count = 0;
+			Node nn = new Node(data, null);
+			Node temp = this.head;
+			while(count != index-1){
+				temp = temp.next;
+				count++;
+			}
+			nn.next = temp.next;
+			temp.next = nn;
+		}
+	}
+	
+	public void insertionSort(){
+		SinglyLinkedListInt sortedList = new SinglyLinkedListInt();
+		sortedList.addLast(this.removeFirst());
+		
+		while(!this.isEmpty()){
+			int flag = 0;
+			int index = 0;
+			int data = this.removeFirst();
+			Node currentNodeFromSortedList = sortedList.head;
+			while(currentNodeFromSortedList != null){
+				if(data < currentNodeFromSortedList.getElement()){
+					sortedList.insertBefore(data,index);
+					flag = 1;
+					break;
+				}
+				currentNodeFromSortedList = currentNodeFromSortedList.next;
+				index++;
+			}
+			
+			if(flag == 0){
+				sortedList.addLast(data);
+			}
+			
+		}
+		
+		this.head = sortedList.head;
 	}
 	
 	
@@ -96,6 +154,7 @@ public class SinglyLinkedListInt {
 			System.out.print(current.getElement()+" ");
 			current = current.next;
 		}
+		System.out.println();
 	}
 	
 	

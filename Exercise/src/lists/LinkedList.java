@@ -1,6 +1,6 @@
 package lists;
 
 
-public class LinkedList<E extends Comparable<?>> extends SinglyLinkedList<E>{
-	
+public class LinkedList<E extends Comparable<E>> extends SinglyLinkedList<E>{
+
 }

@@ -1,6 +1,8 @@
 package lists;
 
-public class SinglyLinkedList<E> {
+
+
+public class SinglyLinkedList<E extends Comparable<E>> {
 	
 	private Node<E> head = null;
 	private Node<E> tail = null;
@@ -54,6 +56,44 @@ public class SinglyLinkedList<E> {
 		if (size == 0)
 			tail = null;
 		return answer;
+	}
+	
+	public void travarse(){
+		Node<E> current = head;
+		while(current!=null){
+			System.out.print(current.getElement()+" ");
+			current = current.next;
+		}
+		System.out.println();
+	}
+	
+	public void sort(){
+		Node<E> i = head.next;
+		Node<E> prevI = head;
+		while(i != null){
+			Node<E> j = head;
+			
+			if(j.getElement().compareTo(i.getElement())>0){
+				prevI.next = i.next;
+				i.next = j;
+				head = i;
+			}
+			else{
+				Node<E> prevJ = null;
+				while(j.next!=null){
+					prevJ = j;
+					j = j.next;
+					if(j.getElement().compareTo(i.getElement())>0){
+						prevI.next = i.next;
+						i.next = j;
+						prevJ.next = i;
+						break;
+					}
+				}
+			}
+			prevI = i;
+			i = i.next;
+		}
 	}
 	
 	
